@@ -1,0 +1,6 @@
+[submodule "afkit"]
+	path = afkit
+	url = https://github.com/RogerLevy/afkit
+[submodule "ramen"]
+	path = ramen
+	url = https://github.com/RogerLevy/ramen
