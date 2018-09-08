@@ -1,19 +1,23 @@
 empty
 0 0 0 include ramen/cutlet.f
+
 include ramen/tiled/tiled.f
 include ramen/lib/stage.f
 
 #1 to #globalscale
+nativewh resolution
 stage 1000 pool: layer0
 
 \ ------------------------------------------------------------------------------------------------
 \ Load map
 
-" ramen/test/sticker-knight/sandbox.tmx" loadtmx  constant map  constant dom
 only forth definitions also xmling also tmxing
+: loadmap 
+0 tmxtileset dup load-tiled-bitmaps
+                 load-tiled-recipes
 
-map 0 loadbitmaps
-map 0 loadrecipes
+s" stickerknight/data/sandbox.tmx" loadmap
+
 
 :is tmxobj ( object-nnn XT -- )  over ?type if cr type then  execute ;
 :is tmxrect ( object-nnn w h -- )  .s 3drop ;
@@ -21,16 +25,9 @@ map 0 loadrecipes
     layer0 one  gid !  drop
     draw>  @gidbmp blit ;
 
-\ for testing purposes, fill the recipes array with a dummy.
-\ note that uncommenting this makes all objects disappear
-\ :noname
-\     #MAXTILES for  ['] noop  recipes push  loop
-\ ; execute
-
-map " parallax" objgroup loadobjects
-map " game" objgroup loadobjects
-map " bounds" objgroup loadobjects
-
+s" parallax" find-objgroup load-objects
+s" game" find-objgroup load-objects
+s" bounds" find-objgroup load-objects
 \ ------------------------------------------------------------------------------------------------
 
 warm go
