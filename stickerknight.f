@@ -1,35 +1,22 @@
 empty
-0 0 0 include ramen/cutlet.f
-
-include ramen/tiled/tiled.f
-include ramen/lib/stage.f
+0 0 0 include ramen/ramen.f
+require ramen/cutlet.f
+require ramen/lib/cam.f
 
 #1 to #globalscale
-nativewh resolution
+1024 768 resolution
 stage 1000 pool: layer0
-
-\ ------------------------------------------------------------------------------------------------
-\ Load map
-
-only forth definitions also xmling also tmxing
-: loadmap 
-0 tmxtileset dup load-tiled-bitmaps
-                 load-tiled-recipes
-
-s" stickerknight/data/sandbox.tmx" loadmap
-
 
 :is tmxobj ( object-nnn XT -- )  over ?type if cr type then  execute ;
 :is tmxrect ( object-nnn w h -- )  .s 3drop ;
 :is tmximage ( object-nnn gid -- )
-    layer0 one  gid !  drop
+    0 -200 +at  layer0 one  gid !  drop
     draw>  @gidbmp blit ;
+    
+: load
+    s" stickerknight/data/sandbox.tmx" open-map
+    0 load-bitmaps  0 load-recipes
+    #objgroups for  i objgroup load-objects  loop
+;
 
-s" parallax" find-objgroup load-objects
-s" game" find-objgroup load-objects
-s" bounds" find-objgroup load-objects
-\ ------------------------------------------------------------------------------------------------
-
-warm go
-
-
+load warm

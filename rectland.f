@@ -2,9 +2,9 @@ include afkit/ans/section.f
 [section] preamble
 
 empty
-0 0 0 include ramen/brick.f
+0 0 0 include ramen/ramen.f
+require ramen/cutlet.f
 
-objlist stage
 stage 100 pool: sprites
 stage 2000 pool: boxes
 
@@ -92,12 +92,11 @@ previous
 
 \ -----------------------------------------------------------------------
 [section] camera
-create m  16 cells /allot
 
 : camtransform  ( -- matrix )
-  m al_identity_transform
-  m  cam 's x 2@ 2pfloor 2negate 2af  al_translate_transform
-  m al_use_transform ;
+  mount
+  m1 cam 's x 2@ 2pfloor globalscale dup 2* 2negate 2af  al_translate_transform
+  m1 al_use_transform ;
 
 : tracked  player 's x 2@  160 120 2-  extents 2clamp  cam 's x 2! ;
 
@@ -117,4 +116,4 @@ create m  16 cells /allot
 boxgrid resetcgrid
 1000 *boxes
 player as /player
-warm go
+warm 

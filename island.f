@@ -1,23 +1,17 @@
 empty
-0 0 0 include ramen/cutlet.f
-require ramen/lib/stage.f
-include ramen/tiled/tiled.f
+1 0 0 include ramen/ramen.f
+require ramen/cutlet.f
+require ramen/lib/cam.f
 
+s" island/data/islandz.tmx" open-map
 
-" ramen/test/island/islandz.tmx" loadnewtmx  constant map  constant dom
-
-only forth definitions also xmling also tmxing
-
-\ map 0 tileset[] drop constant ts constant tsdom
-map 0 loadtileset
-
-map " Ground" layer  0 0 tilebuf loc  tilebuf pitch@  readlayer
-map " Ground" layer  0 0 loadtilemap \ same thing but also converts the data
+map 0 load-tmxtileset
+s" Ground" find-tmxlayer  tilebuf 0 0 load-tmxlayer
 
 : -act  act> noop ;
 cam as  -act
 
-create tm object  /tilemap  50 50 x 2!  300 300 w 2!
+create tm object  /tilemap  128 64 x 2!  128 128 w 2!
 
 \ scroll the tilemap
 : bounce  1 1 vx 2!  act>
@@ -27,10 +21,9 @@ create tm object  /tilemap  50 50 x 2!  300 300 w 2!
     vy @ 0> if  y @ 450 >= if  vy @ negate vy !  then then
     vx 2@ tm 's scrollx 2+! ;
 
-
 stage object: dummy  10 15 x 2!  bounce
 
-: show-stage  show>  black backdrop  tm -> draw   subject track  camtrans  stage drawzsorted ;
-:is warm  pump-noop  step-stage  show-stage ;
+: (show)  show>  black backdrop  tm >{ draw }   subject track  camtrans  stage drawzsorted ;
+:is warm  (show)  ;
 
-warm go
+warm

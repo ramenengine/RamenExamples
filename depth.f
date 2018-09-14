@@ -1,10 +1,10 @@
-empty
-0 0 0 include ramen/cutlet.f
+exists empty [if] empty [then]
+1 0 0 include ramen/ramen.f
+require ramen/cutlet.f
 
-" data/2200man.png" image: 2200man.image  2200man.image 21 36 subdivide
-" data/alfador.png" image: alfador.image  alfador.image 18 20 subdivide
-" data/fairgirl.png" image: fairgirl.image  fairgirl.image 21 28 subdivide
-
+s" data/2200man.png" image: 2200man.image  2200man.image 21 36 subdivide
+s" data/alfador.png" image: alfador.image  alfador.image 18 20 subdivide
+s" data/fairgirl.png" image: fairgirl.image  fairgirl.image 21 28 subdivide
 \ ENUM doesn't work as expected...
 0 constant DIR_DOWN
 1 constant DIR_UP
@@ -90,7 +90,6 @@ defer walk
     y @ chrh < or  y @ displayh 3 / > or if  aboutface  walk  then
     x 2@  0 chrh  displaywh 3 3 2/  chrw 0 2- 2clamp  x 2!
     ;
-: :is  :noname  postpone [  [compile] is  ] ;
 :is walk   walkv vx 2!
     0.5 2 between fps * wc !
     act>  limit  -wc ?exit  wander ;
@@ -98,13 +97,12 @@ defer walk
     1 3 between fps * wc !
     act>  limit  -wc ?exit  ?turn walk ;
 
-objlist stage
 stage 500 pool: sprites
 
 \ Create a bunch of randomized NPC's
 create roster  ' girl , ' man , ' cat ,
 : someone   3 rnd cells roster + @  execute ;
-: sprinkle  0 do  displaywh 3 3 2/ 2rnd at  sprites one  someone  ?turn  wander  loop  ;
+: sprinkle  for  displaywh 3 3 2/ 2rnd at  sprites one  someone  ?turn  wander  loop  ;
 
 \ 3X scaling
 0 0 3 3 0 transform: m0
@@ -120,4 +118,4 @@ create roster  ' girl , ' man , ' cat ,
 : (show)  show>  grey backdrop  magnified playfield ;
 :is warm  (pump)  (step)  (show) ;
 
-warm go
+warm 
