@@ -5,7 +5,7 @@ require ramen/lib/cam.f
 
 s" island/data/islandz.tmx" open-map
 
-map 0 load-tmxtileset
+0 load-tmxtileset
 s" Ground" find-tmxlayer  tilebuf 0 0 load-tmxlayer
 
 : -act  act> noop ;
@@ -21,7 +21,7 @@ create tm object  /tilemap  128 64 x 2!  128 128 w 2!
     vy @ 0> if  y @ 450 >= if  vy @ negate vy !  then then
     vx 2@ tm 's scrollx 2+! ;
 
-stage object: dummy  10 15 x 2!  bounce
+stage object: scroller  10 15 x 2!  bounce
 
 : (show)  show>  black backdrop  tm >{ draw }   subject track  camtrans  stage drawzsorted ;
 :is warm  (show)  ;
