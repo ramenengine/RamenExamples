@@ -1,8 +1,7 @@
 \ Fruitflies
 \ Based on code written for Win32Forth around the year 2000
 
-empty
-0 0 0 include ramen/ramen.f
+#1 0 0 include ramen/ramen.f
 require ramen/cutlet.f
 
 \ This program was inspired by the motion of flies.

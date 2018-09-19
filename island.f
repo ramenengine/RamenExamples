@@ -1,5 +1,4 @@
-empty
-1 0 0 include ramen/ramen.f
+#1 0 0 include ramen/ramen.f
 require ramen/cutlet.f
 require ramen/lib/cam.f
 

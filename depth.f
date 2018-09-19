@@ -1,5 +1,4 @@
-exists empty [if] empty [then]
-1 0 0 include ramen/ramen.f
+#1 0 0 include ramen/ramen.f
 require ramen/cutlet.f
 
 s" data/2200man.png" image: 2200man.image  2200man.image 21 36 subdivide
