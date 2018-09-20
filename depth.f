@@ -1,4 +1,4 @@
-#1 0 0 include ramen/ramen.f
+0 0 0 include ramen/ramen.f
 require ramen/cutlet.f
 
 s" data/2200man.png" image: 2200man.image  2200man.image 21 36 subdivide
@@ -10,16 +10,14 @@ s" data/fairgirl.png" image: fairgirl.image  fairgirl.image 21 28 subdivide
 2 constant DIR_RIGHT
 3 constant DIR_LEFT
 
-redef on
-    var dir    \ direction, see above enums
-    var img    \ current image used for animation; tied to animation data (flipbooks)
-    var data   \ static NPC data, like animation pointers
+var dir    \ direction, see above enums
+var img    \ current image used for animation; tied to animation data (flipbooks)
+var data   \ static NPC data, like animation pointers
 
-    \ internal:
-        var anm  \ animation pointer
-        var ctr  \ animation counter
-        var spd  \ higher is slower; set by ANIMATE; note there is a hardcoded value passed by NPC-SPRITE
-redef off
+\ internal:
+    var anm  \ animation pointer
+    var ctr  \ animation counter
+    var spd  \ higher is slower; set by ANIMATE; note there is a hardcoded value passed by NPC-SPRITE
 
 : ?anmloop  anm @ @ 0 >= ?exit  anm @ cell+ @ anm ! ;
 : animate  ( speed -- adr | 0 )  \ adr points to a cell in the animation data
@@ -42,19 +40,17 @@ flipbook: cat-down   alfador.image  , 1 , 2 , 3 , 4 , ;
 flipbook: cat-left   alfador.image  , 6 , 7 , 8 , 7 , ;
 flipbook: cat-up     alfador.image  , 10 , 11 , 12 , 13 , ;
 
-
 : data@   ( n -- value )  cells data @ + @ ;
 : flipdata@  4 + data@ ;
-: sprite  ( dir -- )   pfloor data@ execute ;
-: turn    ( dir -- )   pfloor dup dir !  sprite ;
-: flip@  dir @ flipdata@ ;
+: !sprite  ( dir -- )   pfloor data@ execute ;
+: turn    ( dir -- )   pfloor dup dir !  !sprite ;
+: @flip  dir @ flipdata@ ;
 : chrw  img @ image.subw @ ;
 : sprh  img @ image.subh @ ;
 : chrh  16 ;
-: >feet  ( y -- y )  sprh - 4 + ;
-: npc-sprite  16 animate @ img @ afsubimg  at@ >feet 2af  flip@  al_draw_bitmap_region ;
-: npc   ( -- <name> )  ( me=obj -- )    create
-    does>  data !  DIR_DOWN turn  draw>  npc-sprite ;
+: npc-sprite  0 sprh negate 4 + +at   16 animate @ @flip subsprite ;
+: npc   ( -- <name> )  ( me=obj -- )    
+    create  does>  data !  DIR_DOWN turn  draw>  npc-sprite ;
 
 npc girl  ' girl-down , ' girl-up , ' girl-left , ' girl-left ,
                     0 ,         0 ,      FLIP_H ,           0 ,

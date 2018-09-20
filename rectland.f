@@ -1,7 +1,7 @@
 include afkit/ans/section.f
 [section] preamble
 
-#1 0 0 include ramen/ramen.f
+0 0 0 include ramen/ramen.f
 require ramen/cutlet.f
 
 stage 100 pool: sprites
